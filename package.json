@@ -1,0 +1,37 @@
+{
+  "name": "ns-billboard",
+  "version": "1.0.0",
+  "description": "Minimal billboard.",
+  "main": "index.js",
+  "keywords": [
+    "billboard"
+  ],
+  "author": "Nilambar Sharma",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ernilambar/ns-billboard.git"
+  },
+  "homepage": "https://github.com/ernilambar/ns-billboard#readme",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "style.css"
+  ],
+  "prettier": {
+    "semi": true,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "bracketSameLine": true,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  },
+  "scripts": {
+    "format": "prettier \"**/*.{css,js,json}\" --write"
+  }
+}
