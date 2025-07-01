@@ -51,6 +51,13 @@ export class nsBillboard {
     this.columnsContainer.style.gridTemplateColumns = `repeat(${this.config.columns}, 1fr)`;
     this.columnsContainer.style.gap = '16px';
 
+    // Create the correct number of column containers up front
+    for (let i = 0; i < this.config.columns; i++) {
+      const column = document.createElement('div');
+      column.className = 'ns-billboard-column';
+      this.columnsContainer.appendChild(column);
+    }
+
     this.container.appendChild(this.columnsContainer);
 
     // Finds target element in DOM.
@@ -88,12 +95,11 @@ export class nsBillboard {
       this.config.columns - 1,
     );
 
-    // Get or create column container
+    // Get the column container (do not create dynamically)
     let column = this.columnsContainer.children[validColumnIndex];
     if (!column) {
-      column = document.createElement('div');
-      column.className = 'ns-billboard-column';
-      this.columnsContainer.appendChild(column);
+      console.error(`Column index ${validColumnIndex} does not exist.`);
+      return null;
     }
 
     // Find or create the single content div
