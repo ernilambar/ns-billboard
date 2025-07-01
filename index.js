@@ -19,6 +19,7 @@ export class nsBillboard {
     };
     this.container = null;
     this.columnsContainer = null;
+    this.create();
 
     // Store instance
     billboardInstances.set(containerId, this);
