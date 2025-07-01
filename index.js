@@ -1,21 +1,27 @@
+const billboardInstances = new Map();
+
 export class nsBillboard {
-  constructor({
-    containerId = 'ns-billboard',
-    containerClass = '',
-    targetSelector = 'body',
-    position = 'beforeend',
-    columns = 1,
-  } = {}) {
-    // Configuration object stores all settings with defaults.
+  constructor(config = {}) {
+    const { containerId = 'ns-billboard' } = config;
+
+    // Return existing instance if available
+    if (billboardInstances.has(containerId)) {
+      return billboardInstances.get(containerId);
+    }
+
+    // Initialize new instance
     this.config = {
       containerId,
-      containerClass,
-      targetSelector,
-      position,
-      columns: Math.max(1, parseInt(columns) || 1), // Ensures at least 1 column.
+      containerClass: config.containerClass || '',
+      targetSelector: config.targetSelector || 'body',
+      position: config.position || 'beforeend',
+      columns: Math.max(1, parseInt(config.columns) || 1),
     };
     this.container = null;
     this.columnsContainer = null;
+
+    // Store instance
+    billboardInstances.set(containerId, this);
   }
 
   create() {
