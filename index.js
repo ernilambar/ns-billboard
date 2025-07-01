@@ -19,8 +19,15 @@ export class nsBillboard {
   }
 
   create() {
-    // Returns existing container if already created.
-    if (this.container) return this.container;
+    // Check for existing billboard with same ID in DOM
+    const existingBillboard = document.getElementById(this.config.containerId);
+    if (existingBillboard) {
+      this.container = existingBillboard;
+      this.columnsContainer = this.container.querySelector(
+        '.ns-billboard-columns',
+      );
+      return this.container;
+    }
 
     // Creates main container element.
     this.container = document.createElement('div');
