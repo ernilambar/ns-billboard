@@ -63,19 +63,18 @@ export class nsBillboard {
   }
 
   addContent(content, columnIndex = 0) {
-    // Returns if container creation fails.
     if (!this.container && !this.create()) {
       console.error('Failed to create billboard container.');
       return null;
     }
 
-    // Validates and normalizes column index.
+    // Validate column index
     const validColumnIndex = Math.min(
       Math.max(0, parseInt(columnIndex) || 0),
       this.config.columns - 1,
     );
 
-    // Gets or creates column container.
+    // Get or create column container
     let column = this.columnsContainer.children[validColumnIndex];
     if (!column) {
       column = document.createElement('div');
@@ -83,17 +82,22 @@ export class nsBillboard {
       this.columnsContainer.appendChild(column);
     }
 
-    // Finds existing content div or creates new one.
-    let contentNode = column.querySelector('.ns-billboard-content');
-    if (!contentNode) {
-      contentNode = document.createElement('div');
-      contentNode.className = 'ns-billboard-content';
-      column.appendChild(contentNode);
+    // Find or create the single content div
+    let contentDiv = column.querySelector('.ns-billboard-content');
+    if (!contentDiv) {
+      contentDiv = document.createElement('div');
+      contentDiv.className = 'ns-billboard-content';
+      column.appendChild(contentDiv);
     }
 
-    // Updates content of the existing node.
-    contentNode.innerHTML = content;
-    return contentNode;
+    // Update content (appends to existing content)
+    if (typeof content === 'string') {
+      contentDiv.innerHTML += content; // Appends new content
+    } else if (content instanceof Node) {
+      contentDiv.appendChild(content.cloneNode(true));
+    }
+
+    return contentDiv;
   }
 
   clear() {
