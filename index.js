@@ -63,7 +63,7 @@ export class nsBillboard {
   }
 
   addContent(content, columnIndex = 0) {
-    // Creates container if it doesn't exist.
+    // Returns if container creation fails.
     if (!this.container && !this.create()) {
       console.error('Failed to create billboard container.');
       return null;
@@ -75,11 +75,6 @@ export class nsBillboard {
       this.config.columns - 1,
     );
 
-    // Creates content node.
-    const contentNode = document.createElement('div');
-    contentNode.className = 'ns-billboard-content';
-    contentNode.innerHTML = content;
-
     // Gets or creates column container.
     let column = this.columnsContainer.children[validColumnIndex];
     if (!column) {
@@ -88,7 +83,16 @@ export class nsBillboard {
       this.columnsContainer.appendChild(column);
     }
 
-    column.appendChild(contentNode);
+    // Finds existing content div or creates new one.
+    let contentNode = column.querySelector('.ns-billboard-content');
+    if (!contentNode) {
+      contentNode = document.createElement('div');
+      contentNode.className = 'ns-billboard-content';
+      column.appendChild(contentNode);
+    }
+
+    // Updates content of the existing node.
+    contentNode.innerHTML = content;
     return contentNode;
   }
 
